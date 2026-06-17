@@ -1,0 +1,15 @@
+services:
+  vue-app:
+    container_name: front-uni-ativos
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      # Sincroniza a raiz do seu computador com o container para o hot-reload
+      - .:/app
+      # Protege os node_modules do container para não usar os do seu sistema operacional
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
