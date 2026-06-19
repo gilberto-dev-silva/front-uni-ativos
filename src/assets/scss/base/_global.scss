@@ -1,0 +1,25 @@
+@use "../abstracts/tokens" as *;
+@import "../../base.css";
+
+body {
+  font-family:
+    $font-family-base,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: $brand-green;
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: $brand-green-hover;
+  }
+}
