@@ -1,38 +1,53 @@
 <template>
-  <main class="font-test">
-    <p class="font-test__label">Teste da fonte General Sans</p>
-    <h1 class="font-test__title">Aa Bb Cc Dd Ee Ff 123</h1>
-    <p class="font-test__subtitle">
-      Se a fonte carregou, esse texto deve parecer diferente da fonte padrão.
-    </p>
-  </main>
+  <div id="app">
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 
-<style lang="scss" scoped>
-.font-test {
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+
+const authStore = useAuthStore();
+
+onMounted(() => {
+  // Verifica autenticação ao iniciar o app
+  if (authStore.isAuthenticated) {
+    authStore.checkAuth();
+  }
+});
+</script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
   min-height: 100vh;
-  display: grid;
-  place-content: center;
-  gap: 0.75rem;
-  text-align: center;
-  font-family: "General Sans", sans-serif;
 }
 
-.font-test__label {
-  font-size: 0.875rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0.7;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
 }
 
-.font-test__title {
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 700;
-  line-height: 1;
-}
-
-.font-test__subtitle {
-  font-size: 1rem;
-  opacity: 0.85;
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
