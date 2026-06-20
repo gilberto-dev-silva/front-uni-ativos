@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000/api",
@@ -10,7 +11,7 @@ const api = axios.create({
 
 // Request interceptor
 api.interceptors.request.use(
-  (config) => {
+  (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -21,7 +22,7 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error) => {
+  (error: AxiosError) => {
     console.error("❌ Erro na requisição:", error);
     return Promise.reject(error);
   },
@@ -29,11 +30,11 @@ api.interceptors.request.use(
 
 // Response interceptor
 api.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse) => {
     console.log(`📥 ${response.status} ${response.config.url}`);
     return response;
   },
-  async (error) => {
+  async (error: AxiosError) => {
     console.error(`❌ ${error.response?.status} ${error.config?.url}`);
 
     // Se receber 401, tenta fazer logout

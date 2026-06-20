@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import { authRoutes } from "@/modules/auth";
 import { campanhasRoutes } from "@/modules/campanhas";
+import { dashboardRoutes } from "@/modules/dashboard";
 import { setupAuthGuard } from "./guards";
 
 const routes: RouteRecordRaw[] = [
@@ -9,23 +10,15 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     redirect: "/dashboard",
   },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: () => import("@/views/DashboardView.vue"),
-    meta: {
-      requiresAuth: true,
-      title: "Dashboard",
-    },
-  },
   // Adiciona as rotas dos módulos
+  ...dashboardRoutes,
   ...authRoutes,
   ...campanhasRoutes,
   // Rota 404
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
-    component: () => import("@/views/NotFoundView.vue"),
+    component: () => import("@/shared/views/NotFoundView.vue"),
   },
 ];
 

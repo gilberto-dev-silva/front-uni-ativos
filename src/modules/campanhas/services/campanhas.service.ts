@@ -110,14 +110,27 @@ export const campanhasService = {
       };
     }
 
-    MOCK_CAMPANHAS[index] = {
-      ...MOCK_CAMPANHAS[index],
+    const campanhaExistente = MOCK_CAMPANHAS[index];
+    if (!campanhaExistente) {
+      console.log("❌ 404 - Campanha não encontrada");
+      throw {
+        response: {
+          status: 404,
+          data: { message: "Campanha não encontrada" },
+        },
+      };
+    }
+
+    const campanhaAtualizada: Campanha = {
+      ...campanhaExistente,
       ...dto,
       updatedAt: new Date().toISOString(),
-    };
+    } as Campanha;
 
-    console.log("✅ 200 - Campanha atualizada:", MOCK_CAMPANHAS[index].titulo);
-    return { ...MOCK_CAMPANHAS[index] };
+    MOCK_CAMPANHAS[index] = campanhaAtualizada;
+
+    console.log("✅ 200 - Campanha atualizada:", campanhaAtualizada.titulo);
+    return { ...campanhaAtualizada };
   },
 
   async deletar(id: number): Promise<void> {
@@ -137,6 +150,9 @@ export const campanhasService = {
     }
 
     const campanhaRemovida = MOCK_CAMPANHAS.splice(index, 1)[0];
+    if (!campanhaRemovida) {
+      throw new Error("Campanha não encontrada");
+    }
     console.log("✅ 200 - Campanha removida:", campanhaRemovida.titulo);
   },
 };

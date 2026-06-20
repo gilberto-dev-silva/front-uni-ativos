@@ -4,7 +4,7 @@ export const campanhasRoutes: RouteRecordRaw[] = [
   {
     path: "/campanhas",
     name: "Campanhas",
-    component: () => import("./components/CampanhaList.vue"),
+    component: () => import("./views/CampanhasView.vue"),
     meta: {
       requiresAuth: true,
       title: "Campanhas",
