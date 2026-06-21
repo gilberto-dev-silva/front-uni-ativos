@@ -1,5 +1,105 @@
 {
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "semi": false,
-  "singleQuote": true
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript", "unicorn", "react", "jsdoc", "nextjs"],
+  "categories": {
+    // Tratar erros de tipo e bugs críticos como erro mesmo (quebra o CI)
+    "correctness": "error",
+    // Código suspeito, mas que pode compilar
+    "suspicious": "error",
+    // Código que funciona, mas é muito desnecessário (variáveis não usadas, etc.)
+    "perf": "warn"
+  },
+  "rules": {
+    // ==========================================
+    // 1. DESLIGAR CONFLITOS COM PRETTIER
+    // ==========================================
+    // Se você usa Prettier, essas regras devem ser desligadas para não brigarem.
+    // Oxlint não formata, mas aponta erros de estilo.
+    "eslint/max-len": "off",
+    "eslint/array-element-newline": "off",
+    "eslint/arrow-parens": "off",
+    "unicorn/number-literal-case": "off",
+
+    // ==========================================
+    // 2. TYPESCRIPT ESTRITO
+    // ==========================================
+    // Força "as" em vez de "<>", essencial para JSX
+    "typescript/consistent-type-assertions": ["error", { "assertionStyle": "as" }],
+    // Proíbe "any" explícito (se seu time já tiver maturidade)
+    "typescript/no-explicit-any": "error",
+    // Proíbe imports que só servem para tipo serem feitos com "import" normal
+    "typescript/consistent-type-imports": ["error", { "fixStyle": "separate-type-imports" }],
+    // Exige readonly em arrays para evitar mutações acidentais
+    "typescript/prefer-readonly-parameter-types": "off", // Melhor deixar off, é muito chato em funções de lib
+
+    // ==========================================
+    // 3. LÓGICA E SEGURANÇA (CORRECTNESS)
+    // ==========================================
+    // Exige === e !== (oxlint já faz isso por padrão como error, mas é bom reforçar)
+    "eslint/eqeqeq": "error",
+    // Proíbe await dentro de loops (geralmente é performance loss)
+    "eslint/no-await-in-loop": "warn",
+    // Proíbe console.log em produção (muito útil)
+    "no-console": "error",
+    // Cuidado com variáveis que são reatribuídas sem nunca serem lidas
+    "eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+
+    // ==========================================
+    // 4. IMPORTS ORDENADOS (Mantém o diff limpo)
+    // ==========================================
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc" }
+      }
+    ],
+
+    // ==========================================
+    // 5. REGRAS UNICORN (Melhores Práticas)
+    // ==========================================
+    // Prefira Array.isArray em vez de instanceof
+    "unicorn/prefer-array-is-array": "error",
+    // Prefira .at() para acessar último elemento
+    "unicorn/prefer-at": "warn",
+    // Prefira throw new Error em vez de throw string
+    "unicorn/throw-new-error": "error",
+
+    // ==========================================
+    // 6. REACT / JSX
+    // ==========================================
+    // Força key nos loops (isso já é padrão, mas se não estiver, ligue)
+    "react/jsx-key": "error",
+    // Proíbe índices como key (só permite se não houver id único)
+    "react/no-array-index-key": "warn",
+    // Encontra erros de digitação em eventos/props
+    "react/no-typos": "error",
+    // Desabilita regra de prop-types se você usa TypeScript estrito
+    "react/prop-types": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.*", "**/*.spec.*"],
+      "rules": {
+        // Em testes, permitimos console e any
+        "no-console": "off",
+        "typescript/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["scripts/*"],
+      "rules": {
+        // Em scripts de build, console é necessário
+        "no-console": "off"
+      }
+    }
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "React": "readonly"
+  }
 }
