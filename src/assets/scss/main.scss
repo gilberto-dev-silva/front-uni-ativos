@@ -1,4 +1,5 @@
-@use "./abstracts/tokens" as *;
-@use "./abstracts/fonts";
-@use "./base/global";
-@use "./layout/app";
+@use './abstracts/tokens' as *;
+@use './abstracts/fonts';
+@use './base/global';
+@use './layout/app';
+@use './components/index';

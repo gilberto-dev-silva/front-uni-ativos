@@ -1,0 +1,17 @@
+.bg-brand-gradient {
+  background: linear-gradient(135deg, #07331a 0%, #0a4d26 100%);
+}
+
+.accent-glow {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
