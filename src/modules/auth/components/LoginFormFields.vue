@@ -46,16 +46,14 @@
     </div>
 
     <div class="flex items-center justify-between">
-      <label class="flex items-center gap-2 cursor-pointer group">
-        <input
-          v-model="rememberMe"
-          type="checkbox"
-          class="w-4 h-4 bg-white rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 accent-emerald-600 cursor-pointer"
-        />
-        <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors"
-          >Lembrar-me</span
+      <div class="flex items-center gap-2 group">
+        <Checkbox v-model="rememberMe" inputId="remember_me" name="remember_me" value="true" />
+        <label
+          class="cursor-pointer text-sm text-gray-600 group-hover:text-gray-900 transition-colors"
+          for="remember_me"
+          >Lembrar-me</label
         >
-      </label>
+      </div>
       <a
         href="#"
         id="forgot-password-link"
@@ -76,6 +74,7 @@
 </template>
 
 <script lang="ts" setup>
+import Checkbox from "primevue/checkbox";
 import { ref, reactive } from "vue";
 
 const emit = defineEmits(["login"]);
