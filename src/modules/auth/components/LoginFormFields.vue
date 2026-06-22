@@ -77,6 +77,13 @@
 import Checkbox from "primevue/checkbox";
 import { ref, reactive } from "vue";
 
+defineProps({
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const emit = defineEmits(["login"]);
 
 const credentials = reactive({
@@ -86,18 +93,12 @@ const credentials = reactive({
 
 const showPassword = ref(false);
 const rememberMe = ref(false);
-const isLoading = ref(false);
 
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
 
 const handleSubmit = async () => {
-  isLoading.value = true;
-  try {
-    await emit("login", { ...credentials, rememberMe: rememberMe.value });
-  } finally {
-    isLoading.value = false;
-  }
+  emit("login", { ...credentials, rememberMe: rememberMe.value });
 };
 </script>

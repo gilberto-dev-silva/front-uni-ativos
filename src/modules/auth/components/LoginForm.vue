@@ -12,7 +12,18 @@
         <h2 class="text-3xl font-bold text-gray-900 mb-2">Bem-vindo de volta</h2>
         <p class="text-gray-500">Acesse sua conta para gerenciar seu inventário de TI.</p>
       </div>
-      <login-form-fields @login="handleLogin" />
+
+      <!-- Mensagem de erro -->
+      <div
+        v-if="errorMessage"
+        class="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm flex items-center gap-2"
+      >
+        <iconify-icon icon="lucide:alert-circle" class="text-lg flex-shrink-0"></iconify-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <login-form-fields :is-loading="isLoading" @login="onLogin" />
+
       <social-login-divider />
       <social-login-buttons />
       <p class="mt-10 text-center text-sm text-gray-500">
@@ -37,10 +48,16 @@
 import LoginFormFields from "./LoginFormFields.vue";
 import SocialLoginDivider from "./SocialLoginDivider.vue";
 import SocialLoginButtons from "./SocialLoginButtons.vue";
+import { useLogin } from "../composables/useLogin";
 
 const year = new Date().getFullYear();
 
-const handleLogin = (credentials: string) => {
-  console.log("Login attempted with:", credentials);
+const { email, password, rememberMe, isLoading, errorMessage, handleLogin } = useLogin();
+
+const onLogin = async (data: Record<string, unknown>) => {
+  email.value = data.email as string;
+  password.value = data.password as string;
+  rememberMe.value = data.rememberMe as boolean;
+  await handleLogin();
 };
 </script>
