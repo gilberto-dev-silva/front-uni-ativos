@@ -1,20 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
+import { setupAuthGuard } from "./guards";
 import { authRoutes } from "@/modules/auth";
 import { campanhasRoutes } from "@/modules/campanhas";
 import { dashboardRoutes } from "@/modules/dashboard";
-import { setupAuthGuard } from "./guards";
+import { ativosRoutes } from "@/modules/ativos";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
     redirect: "/dashboard",
   },
-  // Adiciona as rotas dos módulos
   ...dashboardRoutes,
   ...authRoutes,
   ...campanhasRoutes,
-  // Rota 404
+  ...ativosRoutes,
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",

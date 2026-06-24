@@ -5,7 +5,7 @@
       isCollapsed ? 'w-20' : 'w-64',
     ]"
   >
-    <!-- Logo/Brand -->
+    <!-- Logo/Brand - mantém igual -->
     <div class="p-6 flex items-center justify-between border-b border-white/10">
       <div class="flex items-center gap-3 overflow-hidden">
         <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shrink-0">
@@ -41,30 +41,30 @@
         Principal
       </div>
 
-      <a
+      <!-- 🔄 ALTERADO: <a> para <router-link> -->
+      <router-link
         v-for="item in mainNavItems"
         :key="item.id"
-        href="#"
+        :to="item.route"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all"
         :class="[
           isCollapsed ? 'justify-center' : '',
-          activeItem === item.id
+          isActiveRoute(item.route)
             ? 'bg-white/10 text-white'
             : 'text-white/60 hover:text-white hover:bg-white/5',
         ]"
-        @click.prevent="activeItem = item.id"
       >
         <i
           :class="[
             item.icon,
             'text-xl shrink-0',
-            activeItem === item.id ? 'text-emerald-400' : 'group-hover:text-emerald-400',
+            isActiveRoute(item.route) ? 'text-emerald-400' : 'group-hover:text-emerald-400',
           ]"
         ></i>
         <span v-show="!isCollapsed" class="font-medium whitespace-nowrap">
           {{ item.label }}
         </span>
-      </a>
+      </router-link>
 
       <!-- Operations Section -->
       <div
@@ -74,30 +74,30 @@
         Operações
       </div>
 
-      <a
+      <!-- 🔄 ALTERADO: <a> para <router-link> -->
+      <router-link
         v-for="item in operationsNavItems"
         :key="item.id"
-        href="#"
+        :to="item.route"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all"
         :class="[
           isCollapsed ? 'justify-center' : '',
-          activeItem === item.id
+          isActiveRoute(item.route)
             ? 'bg-white/10 text-white'
             : 'text-white/60 hover:text-white hover:bg-white/5',
         ]"
-        @click.prevent="activeItem = item.id"
       >
         <i
           :class="[
             item.icon,
             'text-xl shrink-0',
-            activeItem === item.id ? 'text-emerald-400' : 'group-hover:text-emerald-400',
+            isActiveRoute(item.route) ? 'text-emerald-400' : 'group-hover:text-emerald-400',
           ]"
         ></i>
         <span v-show="!isCollapsed" class="font-medium whitespace-nowrap">
           {{ item.label }}
         </span>
-      </a>
+      </router-link>
 
       <!-- System Section -->
       <div
@@ -107,33 +107,33 @@
         Sistema
       </div>
 
-      <a
+      <!-- 🔄 ALTERADO: <a> para <router-link> -->
+      <router-link
         v-for="item in systemNavItems"
         :key="item.id"
-        href="#"
+        :to="item.route"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all"
         :class="[
           isCollapsed ? 'justify-center' : '',
-          activeItem === item.id
+          isActiveRoute(item.route)
             ? 'bg-white/10 text-white'
             : 'text-white/60 hover:text-white hover:bg-white/5',
         ]"
-        @click.prevent="activeItem = item.id"
       >
         <i
           :class="[
             item.icon,
             'text-xl shrink-0',
-            activeItem === item.id ? 'text-emerald-400' : 'group-hover:text-emerald-400',
+            isActiveRoute(item.route) ? 'text-emerald-400' : 'group-hover:text-emerald-400',
           ]"
         ></i>
         <span v-show="!isCollapsed" class="font-medium whitespace-nowrap">
           {{ item.label }}
         </span>
-      </a>
+      </router-link>
     </nav>
 
-    <!-- User Profile -->
+    <!-- User Profile - mantém igual -->
     <div class="p-4 border-t border-white/10">
       <div
         class="flex items-center gap-3 p-2 rounded-xl bg-white/5 overflow-hidden"
@@ -164,19 +164,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router"; // 🆕 Adicionado useRoute
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 
 const router = useRouter();
+const route = useRoute(); // 🆕 Para verificar rota ativa
 const authStore = useAuthStore();
 
+// 🆕 Interface atualizada com 'route'
 interface NavItem {
   id: string;
   label: string;
   icon: string;
+  route: string; // 🆕 Nova propriedade
 }
 
 const props = defineProps<{
@@ -187,10 +190,13 @@ const emit = defineEmits<{
   toggle: [];
 }>();
 
-const activeItem = ref("dashboard");
-
 const toggleSidebar = () => {
   emit("toggle");
+};
+
+// 🆕 Função para verificar se a rota está ativa
+const isActiveRoute = (path: string) => {
+  return route.path === path || route.path.startsWith(path + "/");
 };
 
 computed(() => ({
@@ -204,19 +210,22 @@ computed(() => ({
   },
 }));
 
+// 🆕 Itens atualizados com rotas reais
 const mainNavItems: NavItem[] = [
-  { id: "dashboard", label: "Dashboard", icon: "pi pi-th-large" },
-  { id: "assets", label: "Ativos de TI", icon: "pi pi-desktop" },
-  { id: "inventory", label: "Inventário", icon: "pi pi-box" },
+  { id: "dashboard", label: "Dashboard", icon: "pi pi-th-large", route: "/dashboard" },
+  { id: "assets", label: "Ativos de TI", icon: "pi pi-desktop", route: "/ativos" }, // 🆕 Rota real
+  { id: "inventory", label: "Inventário", icon: "pi pi-box", route: "/inventario" },
 ];
 
 const operationsNavItems: NavItem[] = [
-  { id: "maintenance", label: "Manutenção", icon: "pi pi-wrench" },
-  { id: "licenses", label: "Licenças", icon: "pi pi-key" },
-  { id: "reports", label: "Relatórios", icon: "pi pi-chart-bar" },
+  { id: "maintenance", label: "Manutenção", icon: "pi pi-wrench", route: "/manutencao" },
+  { id: "licenses", label: "Licenças", icon: "pi pi-key", route: "/licencas" },
+  { id: "reports", label: "Relatórios", icon: "pi pi-chart-bar", route: "/relatorios" },
 ];
 
-const systemNavItems: NavItem[] = [{ id: "settings", label: "Configurações", icon: "pi pi-cog" }];
+const systemNavItems: NavItem[] = [
+  { id: "settings", label: "Configurações", icon: "pi pi-cog", route: "/configuracoes" },
+];
 
 async function handleLogout() {
   await authStore.logout();
@@ -233,5 +242,10 @@ async function handleLogout() {
   transition:
     opacity 0.2s ease-in-out,
     width 0.2s ease-in-out;
+}
+
+/* 🆕 Estilo adicional para router-link-active */
+.router-link-active {
+  /* Já estamos usando classes condicionais, mas isso garante fallback */
 }
 </style>
