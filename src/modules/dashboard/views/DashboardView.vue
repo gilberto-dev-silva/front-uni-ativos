@@ -1,5 +1,5 @@
 <template>
-  <DashboardLayout>
+  <dashboard-layout>
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
         <h2 class="text-2xl font-bold text-gray-900">Dashboard</h2>
@@ -28,18 +28,18 @@
         <ReportCard />
       </div>
     </div>
-  </DashboardLayout>
+  </dashboard-layout>
 </template>
 
 <script setup lang="ts">
 import Button from "primevue/button";
-import DashboardLayout from "../components/DashboardLayout.vue";
 import StatsCards from "../components/StatsCards.vue";
-import InventoryChart from "../components/InventoryChart.vue";
-import RecentAssets from "../components/RecentAssets.vue";
-import CriticalAlerts from "../components/CriticalAlerts.vue";
 import ReportCard from "../components/ReportCard.vue";
+import RecentAssets from "../components/RecentAssets.vue";
 import { useDashboard } from "../composables/useDashboard";
+import DashboardLayout from "../layout/DashboardLayout.vue";
+import InventoryChart from "../components/InventoryChart.vue";
+import CriticalAlerts from "../components/CriticalAlerts.vue";
 
 const {
   statsCards,

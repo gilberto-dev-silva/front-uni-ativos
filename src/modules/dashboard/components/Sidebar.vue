@@ -149,13 +149,14 @@
           <p class="text-xs text-white/40 truncate">Admin TI</p>
         </div>
         <Button
-          v-show="!isCollapsed"
-          icon="pi pi-sign-out"
-          severity="secondary"
           text
           rounded
-          class="text-white/40 hover:text-white shrink-0"
           v-tooltip="'Sair'"
+          severity="secondary"
+          v-show="!isCollapsed"
+          icon="pi pi-sign-out"
+          @click="handleLogout"
+          class="text-white/40 hover:text-white shrink-0"
         />
       </div>
     </div>
@@ -163,9 +164,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+
+const router = useRouter();
+const authStore = useAuthStore();
 
 interface NavItem {
   id: string;
@@ -187,6 +193,17 @@ const toggleSidebar = () => {
   emit("toggle");
 };
 
+computed(() => ({
+  user: authStore.user,
+  token: authStore.token?.substring(0, 30) + "...",
+  isAuthenticated: authStore.isAuthenticated,
+  isAdmin: authStore.isAdmin,
+  localStorage: {
+    token: localStorage.getItem("token")?.substring(0, 30) + "...",
+    user: JSON.parse(localStorage.getItem("user") || "null"),
+  },
+}));
+
 const mainNavItems: NavItem[] = [
   { id: "dashboard", label: "Dashboard", icon: "pi pi-th-large" },
   { id: "assets", label: "Ativos de TI", icon: "pi pi-desktop" },
@@ -200,6 +217,11 @@ const operationsNavItems: NavItem[] = [
 ];
 
 const systemNavItems: NavItem[] = [{ id: "settings", label: "Configurações", icon: "pi pi-cog" }];
+
+async function handleLogout() {
+  await authStore.logout();
+  router.push("/login");
+}
 </script>
 
 <style scoped>
