@@ -1,5 +1,11 @@
 <template>
   <dashboard-layout>
+    <base-breadcrumb
+      :home="pageConfig"
+      :model="breadcrumbItems"
+      :class="BREADCRUMB_CLASSES.container"
+    />
+
     <!-- Header Area -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
@@ -235,10 +241,16 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import Tag from "primevue/tag";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
-import Tag from "primevue/tag";
 import DashboardLayout from "@/modules/dashboard/layout/DashboardLayout.vue";
+
+import { BREADCRUMB_CLASSES } from "@/shared/components/breadcrumb";
+import BaseBreadcrumb from "@/shared/components/breadcrumb/BaseBreadcrumb.vue";
+import { useAtivosBreadcrumb } from "../composables/useAtivosBreadcrumb";
+
+const { pageConfig, breadcrumbItems } = useAtivosBreadcrumb();
 
 interface Asset {
   id: string;
@@ -421,7 +433,7 @@ const saveNewAsset = () => {
     name: newAssetForm.value.name,
     category: newAssetForm.value.category || "Geral",
     department: newAssetForm.value.department || "TI",
-    acquisitionDate: new Date().toISOString().split("T")[0],
+    acquisitionDate: new Date().toISOString().slice(0, 10),
     value: newAssetForm.value.value || "R$ 0,00",
     status: newAssetForm.value.status,
     icon:
