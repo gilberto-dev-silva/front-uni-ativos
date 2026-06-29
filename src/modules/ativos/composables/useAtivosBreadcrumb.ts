@@ -13,7 +13,6 @@ export function useAtivosBreadcrumb(): UseAtivosBreadcrumbReturn {
   const route: RouteLocationNormalizedLoaded = useRoute();
 
   const pageConfig = computed<BreadcrumbItem>(() => ({
-    route: "/ativos",
     label: "Ativos de TI",
     icon: "pi pi-desktop",
   }));
@@ -21,9 +20,8 @@ export function useAtivosBreadcrumb(): UseAtivosBreadcrumbReturn {
   const breadcrumbItems = computed<BreadcrumbItem[]>(() => {
     const items: BreadcrumbItem[] = [
       {
-        route: "/ativos",
-        label: "Ativos de TI",
-        icon: "pi pi-desktop",
+        label: "Listagem de Ativos",
+        icon: "pi pi-list",
       },
     ];
 

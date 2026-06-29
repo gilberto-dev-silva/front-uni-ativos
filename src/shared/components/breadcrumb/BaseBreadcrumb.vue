@@ -62,15 +62,15 @@
 import { computed } from "vue";
 import Breadcrumb from "primevue/breadcrumb";
 import type { BreadcrumbItem, BreadcrumbProps } from "./Breadcrumb.types";
-import { DEFAULT_HOME_ITEM, BREADCRUMB_CLASSES } from "./Breadcrumb.config";
+import { DEFAULT_PAGE_CONFIG, BREADCRUMB_CLASSES } from "./Breadcrumb.config";
 
 const props = withDefaults(defineProps<BreadcrumbProps>(), {
-  pageConfig: () => ({ ...DEFAULT_HOME_ITEM }),
+  pageConfig: () => ({ ...DEFAULT_PAGE_CONFIG }),
   class: "",
 });
 
 const pageConfig = computed<BreadcrumbItem>(() => ({
-  ...DEFAULT_HOME_ITEM,
+  ...DEFAULT_PAGE_CONFIG,
   ...props.pageConfig,
 }));
 
