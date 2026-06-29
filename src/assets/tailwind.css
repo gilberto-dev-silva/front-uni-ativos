@@ -2,6 +2,13 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-brand-dark: #07331A;
+  --color-brand-dark-hover: #0a4d26;
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+}
+
 :root {
   color-scheme: light;
 }

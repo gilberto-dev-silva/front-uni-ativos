@@ -1,0 +1,19 @@
+:root {
+  --brand-dark: #07331A;
+  --brand-dark-hover: #0a4d26;
+  --brand-green: #10b981;
+  --brand-green-hover: rgba(16, 185, 129, 0.2);
+  --surface: #ffffff;
+  --surface-hover: #f9fafb;
+  --text: #1a1a1a;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+}
+
+.dark {
+  --surface: #0d1117;
+  --surface-hover: #161b22;
+  --text: #c9d1d9;
+  --text-muted: #8b949e;
+  --border: #30363d;
+}

@@ -19,7 +19,6 @@
           class="bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 hover:border-emerald-700 transition-colors"
           @click="showAddModal = true"
         />
-        <Button label="Exportar" icon="pi pi-download" severity="secondary" outlined />
       </div>
     </div>
 

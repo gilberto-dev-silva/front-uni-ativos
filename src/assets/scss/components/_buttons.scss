@@ -1,0 +1,56 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &--primary {
+    background: var(--brand-dark);
+    color: #ffffff;
+    border-color: var(--brand-dark);
+
+    &:hover {
+      background: var(--brand-dark-hover);
+      border-color: var(--brand-dark-hover);
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: var(--brand-dark);
+    border-color: var(--brand-dark);
+
+    &:hover {
+      background: var(--brand-dark);
+      color: #ffffff;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--brand-dark);
+    border-color: transparent;
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  &--sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  &--lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
