@@ -14,10 +14,10 @@
       </div>
       <div class="flex gap-3">
         <Button
-          label="Novo Ativo"
           icon="pi pi-plus"
-          class="bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 hover:border-emerald-700 transition-colors"
+          label="Novo Ativo"
           @click="showAddModal = true"
+          class="button button--primary text-white border-emerald-600 hover:bg-emerald-700 hover:border-emerald-700 transition-colors"
         />
       </div>
     </div>

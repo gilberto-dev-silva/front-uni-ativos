@@ -54,3 +54,21 @@
     font-size: 1rem;
   }
 }
+
+.p-button.button--primary {
+  background: var(--brand-dark) !important;
+  color: #ffffff !important;
+  border-color: var(--brand-dark) !important;
+
+  &:hover {
+    background: var(--brand-dark-hover) !important;
+    border-color: var(--brand-dark-hover) !important;
+  }
+
+  &:focus,
+  &:active {
+    background: var(--brand-dark-hover) !important;
+    border-color: var(--brand-dark-hover) !important;
+    box-shadow: 0 0 0 2px rgba(7, 51, 26, 0.25) !important;
+  }
+}

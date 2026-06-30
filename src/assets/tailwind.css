@@ -3,10 +3,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-brand-dark: #07331A;
-  --color-brand-dark-hover: #0a4d26;
-  --color-surface: var(--surface);
-  --color-surface-hover: var(--surface-hover);
+  --color-brand-dark:        #07331a;
+  --color-brand-dark-hover:  #0a4d26;
+  --color-brand-green:       #10b981;
+  --color-brand-green-hover: rgba(16, 185, 129, 0.2);
+  --color-surface:           var(--surface);
+  --color-surface-hover:     var(--surface-hover);
+  --color-text:              var(--text);
+  --color-text-muted:        var(--text-muted);
+  --color-border:            var(--border);
 }
 
 :root {
