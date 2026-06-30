@@ -22,23 +22,6 @@
       </div>
     </div>
 
-    <!-- Quick Stats Card Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div
-        v-for="stat in stats"
-        :key="stat.title"
-        class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between"
-      >
-        <div>
-          <p class="text-gray-500 text-sm font-medium">{{ stat.title }}</p>
-          <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ stat.value }}</h3>
-        </div>
-        <div :class="[stat.iconBg, stat.iconColor, 'p-3 rounded-xl']">
-          <i :class="[stat.icon, 'text-2xl']"></i>
-        </div>
-      </div>
-    </div>
-
     <!-- Toolbar and Table Container -->
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
       <!-- Table Filters -->
@@ -338,45 +321,6 @@ const newAssetForm = ref({
   department: "",
   value: "",
   status: "active" as "active" | "stock" | "maintenance",
-});
-
-// Computed Stats
-const stats = computed(() => {
-  const total = assets.value.length;
-  const active = assets.value.filter((a) => a.status === "active").length;
-  const stock = assets.value.filter((a) => a.status === "stock").length;
-  const maintenance = assets.value.filter((a) => a.status === "maintenance").length;
-
-  return [
-    {
-      title: "Total de Ativos",
-      value: total,
-      icon: "pi pi-desktop",
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
-    },
-    {
-      title: "Em Uso",
-      value: active,
-      icon: "pi pi-user-edit",
-      iconBg: "bg-emerald-50",
-      iconColor: "text-emerald-600",
-    },
-    {
-      title: "Em Estoque",
-      value: stock,
-      icon: "pi pi-box",
-      iconBg: "bg-amber-50",
-      iconColor: "text-amber-600",
-    },
-    {
-      title: "Em Manutenção",
-      value: maintenance,
-      icon: "pi pi-cog",
-      iconBg: "bg-red-50",
-      iconColor: "text-red-600",
-    },
-  ];
 });
 
 // Computed Filtered Assets
